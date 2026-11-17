@@ -3,7 +3,7 @@
  * Plugin Name: Max QR Code
  * Plugin URI: https://www.getmaxqr.com/docs
  * Description: Generate and embed Max QR Code images via shortcode using the Max QR Code API.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Requires at least: 6.0
  * Requires PHP: 8.1
  * Author: Max QR Code
@@ -19,7 +19,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('MAX_QR_CODE_VERSION', '0.1.0');
+define('MAX_QR_CODE_VERSION', '0.1.1');
 define('MAX_QR_CODE_FILE', __FILE__);
 define('MAX_QR_CODE_PATH', plugin_dir_path(__FILE__));
 define('MAX_QR_CODE_URL', plugin_dir_url(__FILE__));

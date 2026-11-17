@@ -112,7 +112,7 @@ final class Max_QR_Shortcodes
             $result = $client->dynamic_get($atts['workspace'], $atts['code_id']);
             $code = $result['code'] ?? null;
             if (!is_array($code) || empty($code['redirect_url'])) {
-                throw new Max_QR_Api_Exception('Dynamic code missing redirect_url', 404, 'not_found');
+                throw new Max_QR_Api_Exception(esc_html__('Dynamic code missing redirect_url', 'max-qr-code'), 404, 'not_found');
             }
             $content = [
                 'type' => 'url',
@@ -153,19 +153,19 @@ final class Max_QR_Shortcodes
         switch ($type) {
             case 'text':
                 if ($atts['text'] === '') {
-                    throw new InvalidArgumentException(__('text is required for type=text', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('text is required for type=text', 'max-qr-code'));
                 }
                 return ['type' => 'text', 'data' => ['text' => $atts['text']]];
             case 'tel':
                 $number = $atts['number'] !== '' ? $atts['number'] : $atts['phone'];
                 if ($number === '') {
-                    throw new InvalidArgumentException(__('number is required for type=tel', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('number is required for type=tel', 'max-qr-code'));
                 }
                 return ['type' => 'tel', 'data' => ['number' => $number]];
             case 'sms':
                 $number = $atts['number'] !== '' ? $atts['number'] : $atts['phone'];
                 if ($number === '') {
-                    throw new InvalidArgumentException(__('number is required for type=sms', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('number is required for type=sms', 'max-qr-code'));
                 }
                 $data = ['number' => $number];
                 if ($atts['body'] !== '') {
@@ -174,7 +174,7 @@ final class Max_QR_Shortcodes
                 return ['type' => 'sms', 'data' => $data];
             case 'wifi':
                 if ($atts['ssid'] === '') {
-                    throw new InvalidArgumentException(__('ssid is required for type=wifi', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('ssid is required for type=wifi', 'max-qr-code'));
                 }
                 return [
                     'type' => 'wifi',
@@ -196,12 +196,12 @@ final class Max_QR_Shortcodes
             case 'payment':
                 $link = $atts['link'] !== '' ? $atts['link'] : $atts['url'];
                 if ($link === '') {
-                    throw new InvalidArgumentException(__('link is required for type=payment', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('link is required for type=payment', 'max-qr-code'));
                 }
                 return ['type' => 'payment', 'data' => ['link' => $link]];
             case 'geo':
                 if ($atts['lat'] === '' || $atts['lng'] === '') {
-                    throw new InvalidArgumentException(__('lat and lng are required for type=geo', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('lat and lng are required for type=geo', 'max-qr-code'));
                 }
                 return [
                     'type' => 'geo',
@@ -217,7 +217,7 @@ final class Max_QR_Shortcodes
                     $url = get_permalink() ?: '';
                 }
                 if ($url === '') {
-                    throw new InvalidArgumentException(__('url is required for type=url', 'max-qr-code'));
+                    throw new InvalidArgumentException(esc_html__('url is required for type=url', 'max-qr-code'));
                 }
                 return ['type' => 'url', 'data' => ['url' => esc_url_raw($url)]];
         }
@@ -232,7 +232,7 @@ final class Max_QR_Shortcodes
     {
         $client = Max_QR_Api_Client::from_settings();
         if ($client === null) {
-            throw new Max_QR_Api_Exception(__('API key not configured', 'max-qr-code'), 401, 'unauthorized');
+            throw new Max_QR_Api_Exception(esc_html__('API key not configured', 'max-qr-code'), 401, 'unauthorized');
         }
 
         $format = in_array($atts['format'], ['png', 'svg', 'pdf'], true) ? $atts['format'] : 'png';

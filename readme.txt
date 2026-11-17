@@ -2,9 +2,9 @@
 Contributors: michaelgenesisii
 Tags: qr, qr code, shortcode, dynamic qr, getmaxqr
 Requires at least: 6.0
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 0.1.0
+Stable tag: 0.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,10 +56,16 @@ Plugin settings are removed. Cached images under `uploads/max-qr-code/` are kept
 
 == Changelog ==
 
+= 0.1.1 =
+* Plugin Check: Tested up to 7.1; escape exception messages for output sniff
+
 = 0.1.0 =
 * Initial release: settings, test connection, `[max_qr]` and `[max_qr_dynamic]`, disk cache
 
 == Upgrade Notice ==
+
+= 0.1.1 =
+Plugin Check / WordPress 7.1 compatibility updates.
 
 = 0.1.0 =
 Initial public release.

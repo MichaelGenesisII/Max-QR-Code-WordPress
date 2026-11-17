@@ -66,7 +66,8 @@ final class Max_QR_Api_Client
         $code = (int) wp_remote_retrieve_response_code($response);
         $raw = (string) wp_remote_retrieve_body($response);
         if ($code < 200 || $code >= 300) {
-            throw $this->exception_from_response($code, $response, $raw);
+            $err = $this->exception_from_response($code, $response, $raw);
+            throw $err;
         }
 
         $mime = (string) wp_remote_retrieve_header($response, 'content-type');
@@ -123,14 +124,15 @@ final class Max_QR_Api_Client
         $code = (int) wp_remote_retrieve_response_code($response);
         $raw = (string) wp_remote_retrieve_body($response);
         if ($code < 200 || $code >= 300) {
-            throw $this->exception_from_response($code, $response, $raw);
+            $err = $this->exception_from_response($code, $response, $raw);
+            throw $err;
         }
         if ($raw === '') {
             return [];
         }
         $decoded = json_decode($raw, true);
         if (!is_array($decoded)) {
-            throw new Max_QR_Api_Exception('Invalid JSON response', 502, 'invalid_json');
+            throw new Max_QR_Api_Exception(esc_html__('Invalid JSON response', 'max-qr-code'), 502, 'invalid_json');
         }
 
         return $decoded;
@@ -163,7 +165,7 @@ final class Max_QR_Api_Client
         $response = wp_remote_request($url, $args);
         if (is_wp_error($response)) {
             throw new Max_QR_Api_Exception(
-                sanitize_text_field($response->get_error_message()),
+                esc_html($response->get_error_message()),
                 0,
                 'http_error',
             );
@@ -184,7 +186,7 @@ final class Max_QR_Api_Client
             $retry_after = (float) $header;
         }
         $request_id = (string) wp_remote_retrieve_header($response, 'x-request-id');
-        $message = sprintf('Max QR API error (%d)', $status);
+        $message = esc_html(sprintf('Max QR API error (%d)', $status));
         $code = 'api_error';
         $details = null;
 
@@ -194,18 +196,18 @@ final class Max_QR_Api_Client
                 $err = $parsed['error'] ?? null;
                 if (is_array($err)) {
                     if (!empty($err['message'])) {
-                        $message = sanitize_text_field((string) $err['message']);
+                        $message = esc_html((string) $err['message']);
                     }
                     if (!empty($err['code'])) {
                         $code = sanitize_key((string) $err['code']);
                     }
                     $details = $err['details'] ?? $parsed;
                 } elseif (!empty($parsed['message'])) {
-                    $message = sanitize_text_field((string) $parsed['message']);
+                    $message = esc_html((string) $parsed['message']);
                     $details = $parsed;
                 }
             } else {
-                $message = sanitize_text_field(substr($raw, 0, 500));
+                $message = esc_html(substr($raw, 0, 500));
             }
         }
 
